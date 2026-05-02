@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvalente <gvalente@student.42.fr>          +#+  +:+       +#+        */
+/*   By: giuliovalente <giuliovalente@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:16:33 by gvalente          #+#    #+#             */
-/*   Updated: 2024/10/23 14:05:13 by gvalente         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:22:56 by giuliovalen      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,16 @@ static char	*free_split(char **strs, int count)
 		i++;
 	}
 	free(strs);
-	return NULL;
+	return (NULL);
 }
 
-static char	**get_splits(char const *s, char c, char **strs, int count)
+static char	**get_splits(char const *s, char c, char **strs, char replace)
 {
 	int	i;
 	int	u;
+	int	count;
 
+	count = 0;
 	u = 0;
 	i = 0;
 	while (s[i])
@@ -68,22 +70,21 @@ static char	**get_splits(char const *s, char c, char **strs, int count)
 			i++;
 		if (!s[i])
 			break ;
-		strs[count] = malloc(get_next_size(s, c, i) + 1);
+		strs[count] = malloc(get_next_size(s, c, i) + 1 + (replace != '\0'));
 		if (!strs[count])
-		{
-			free_split(strs, count);
-			return (NULL);
-		}
+			return (free_split(strs, count), NULL);
 		u = 0;
 		while (s[i] && s[i] != c)
 			strs[count][u++] = s[i++];
+		if (replace != '\0' && s[i] != '\0')
+			strs[count][u++] = replace;
 		strs[count][u] = '\0';
 		count++;
 	}
 	return (strs);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c, char replace)
 {
 	char	**strs;
 	int		str_count;
@@ -95,5 +96,5 @@ char	**ft_split(char const *s, char c)
 	if (!strs)
 		return (NULL);
 	strs[str_count] = NULL;
-	return (get_splits(s, c, strs, 0));
+	return (get_splits(s, c, strs, replace));
 }
