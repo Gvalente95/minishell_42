@@ -363,7 +363,7 @@ Comprehensive error management with:
 
 ## 👨‍💻 Author
 
-Created by **Giulio Valente** and team at 42 School
+Created by **Giulio Valente #gvalente95** and **pierre-loïc** at 42 School
 
 ## 📄 License
 
